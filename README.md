@@ -5,9 +5,9 @@
 Overview – see below for details:
 
 User has to set up the following before they can get started:
-- `data.csv`: This file contains file names and classes of already labeled images, using the following column names:[add image]
+- `data.csv`: This file contains file names and classes of already labeled images, using the following column names: ![Column Names Labeled](https://github.com/slds-lmu/wildlife-experiments-server/raw/main/documentation/column_names_labeled.png)
   - Make sure to include images labeled as `Empty` in the file! The file should include images with animals as well as empty ones to ensure the best performance of the pipeline.
-- `unlabeled.csv`: This file contains file names of unlabeled images using the following column names: [add_image]
+- `unlabeled.csv`: This file contains file names of unlabeled images using the following column names: ![Column Names Unlabeled](https://github.com/slds-lmu/wildlife-experiments-server/raw/main/documentation/column_names_unlabeled.png)
 
 The main difference between the setup of those two files is that the labeled file contains the column `Species_Class`. 
 
@@ -19,11 +19,11 @@ The training of the models is completed using .csv files. You need to provide a 
  
 You can also store those files in a different folder, that will however require you to define the folder while starting your scripts (explained later). The column names within the file should look as following,
 
-[add image]
+![Column Names Labeled](https://github.com/slds-lmu/wildlife-experiments-server/raw/main/documentation/column_names_labeled.png)
 
 for unlabeled data (`unlabeled.csv`), and 
 
-[add image]
+![Column Names Unlabeled](https://github.com/slds-lmu/wildlife-experiments-server/raw/main/documentation/column_names_unlabeled.png)
 
 for labeled data (`data.csv`).
  
