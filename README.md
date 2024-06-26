@@ -13,6 +13,12 @@ The main difference between the setup of those two files is that the labeled fil
 
 You can either put these in the folder `data`, which would be the default. Or put it wherever you want. This means you can work on multiple projects in parallel. However, if you decide to put the files into your selected folder, you will need to remember to always declare the folder using flag `-d` while running the command (more details on how to do it in the next parts). If you decide to store your data in a separate folder, make sure that the `data.csv` and `unlabeled.csv` corresponding to one project are always stored together and not in separate folders! 
 
+## Environments 
+
+We utilized two different environments for our scripts. One environment based on PyTorch was used for the data preparation step (`data_prep.py`), where MegaDetector is utilized. You can find the requirements for this environment in `requirements_torch.txt`.
+
+The other environment is based on TensorFlow and is used for all the other scripts in this repository. You can find its requirements in `requirements_tf.txt`.
+
 ## Data Setup
 
 The training of the models is completed using .csv files. You need to provide a csv file for the labeled and unlabeled data (or either of those depending on the experiments you want to run). The default folder to store the csv files is data. The csv file with labels should be called `data.csv`, and the csv file with images without labels should be called unlabeled.csv. While generating the file with labeled data, make sure to include images that are empty (label `Empty`) and images labeled as other, representing species that aren’t a member of any of your intended classes. 
