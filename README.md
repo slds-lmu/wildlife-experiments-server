@@ -49,18 +49,18 @@ If you set `-u True`, then the code runs over the images in the `unlabeled.csv`.
 #### Output
 
 If you ran the script using `-n True`, the following files should be generated into your selected data folder:
-- train.pkl
-- val.pkl
-- test.pkl
-- md_labeled.json
-- labels.csv
-- bbox_map.json
-- labels_map.json
+- `train.pkl`
+- `val.pkl`
+- `test.pkl`
+- `md_labeled.json`
+- `labels.csv`
+- `bbox_map.json`
+- `labels_map.json`
   
 If you ran the script using `-u True`, the following files should be generated into your selected data folder:
-- bbox_map_unlabeled.json
-- md_unlabeled.json
-- unlabeled.pkl
+- `bbox_map_unlabeled.json`
+- `md_unlabeled.json`
+- `unlabeled.pkl`
 
 ## Training
 ```
@@ -98,13 +98,13 @@ The results of the training are stored in the `training_outputs` folder. An earl
 
 The output of the training can be found in training_outputs/new_species. For each training a new folder is generated inside of `training_outputs/new_species` that is named based on the date and the time when the training was started. Then inside of that folder, you can find folders corresponding to each of the thresholds stated for the training. Inside of each of the folders corresponding to the thresholds, you can find the following files:
 
-- model.h5 - the best model corresponding to that given training
+- `model.h5` - the best model corresponding to that given training
     
     Then, each of the files with the results (which are run on the validation set) correspond to the model you can find in the folder, those files are:
-  - overall_results.csv - with results for the whole dataset regardless of the class
-  - per_species_results.csv - with results per each species 
-  - val_pred.csv - the results of the prediction on each image in the validation set
-  - confusion_matrix.png - a figure representing the confusion matrix.
+  - `overall_results.csv` - with results for the whole dataset regardless of the class
+  - `per_species_results.csv` - with results per each species 
+  - `val_pred.csv` - the results of the prediction on each image in the validation set
+  - `confusion_matrix.png` - a figure representing the confusion matrix.
  
 Based on the results, you can decide which model at which threshold performs best for your given task or which model you would like to use for active learning. The threshold that is at the name of the folder should then be stated using the flag `-t` while running other steps. For example, if you pick a model in folder 0.1, state `-t 0.1` while running the active learning or predictions and evaluations. 
 
