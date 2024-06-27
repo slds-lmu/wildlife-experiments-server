@@ -15,7 +15,7 @@ You can either put these in the folder `data`, which would be the default. Or pu
 
 ## Environments 
 
-We utilized two different environments for our scripts. One environment based on PyTorch was used for the data preparation step (`data_prep.py`), where MegaDetector is utilized. You can find the requirements for this environment in `requirements_torch.txt`.
+We utilized two different environments for our scripts. One environment based on PyTorch was used for the data preparation step (`data_prep.py`), where [MegaDetector](https://github.com/agentmorris/MegaDetector) is utilized. You can find the requirements for this environment in `requirements_torch.txt`.
 
 The other environment is based on TensorFlow and is used for all the other scripts in this repository. You can find its requirements in `requirements_tf.txt`.
 
@@ -182,11 +182,26 @@ Depending, on whether you set `-f` to `True` or `False`, you will find different
 
 ## Other Info
 - Link to our pre-trained model on which you can start the passive training: [download here](https://syncandshare.lrz.de/getlink/fiJsgDEKtkLCXfbhWM1GLR/ckpt_final_model.hdf5).
-- Paper on which the repository is based: [find here](https://arxiv.org/pdf/2303.15823).
-- This repository is utlizing a wildlife-ml package you can find in this [repository](https://github.com/slds-lmu/wildlife-ml).
+- Paper on which the repository is based: [Bothmann et al. (2023)](https://linkinghub.elsevier.com/retrieve/pii/S1574954123002601).
+- This repository utilizes a wildlife-ml package you can find in this [repository](https://github.com/slds-lmu/wildlife-ml).
 
-
-
+## Citation
+If use this repository, please consider citing our corresponding paper:
+```
+@article{bothmann_automated_2023,
+	title = {Automated wildlife image classification: {An} active learning tool for ecological applications},
+	volume = {77},
+	issn = {15749541},
+	url = {https://linkinghub.elsevier.com/retrieve/pii/S1574954123002601},
+	doi = {10.1016/j.ecoinf.2023.102231},
+	language = {en},
+	urldate = {2023-08-30},
+	journal = {Ecological Informatics},
+	author = {Bothmann, Ludwig and Wimmer, Lisa and Charrakh, Omid and Weber, Tobias and Edelhoff, Hendrik and Peters, Wibke and Nguyen, Hien and Benjamin, Caryl and Menzel, Annette},
+	year = {2023},
+	pages = {102231},
+}
+```
 
 
 
