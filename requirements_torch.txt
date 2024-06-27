@@ -96,6 +96,6 @@ tzdata==2023.3
 urllib3==1.26.16
 wcwidth==0.2.8
 Werkzeug==2.3.7
-wildlifeml @ git+https://github.com/slds-lmu/wildlife-ml.git@afb2274f401e45e465179abcfa53618cb8018d3a
+wildlifeml @ git+https://github.com/slds-lmu/wildlife-ml.git@e46a854e5bcdac88538667c315c00c16601d29e8
 wrapt==1.15.0
 zipp==3.16.2
