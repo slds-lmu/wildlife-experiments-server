@@ -186,7 +186,7 @@ Depending, on whether you set `-f` to `True` or `False`, you will find different
 - This repository utilizes a wildlife-ml package you can find in this [repository](https://github.com/slds-lmu/wildlife-ml).
 
 ## Citation
-If use this repository, please consider citing our corresponding paper:
+If you use this repository, please consider citing our corresponding paper:
 ```
 @article{bothmann_automated_2023,
 	title = {Automated wildlife image classification: {An} active learning tool for ecological applications},
