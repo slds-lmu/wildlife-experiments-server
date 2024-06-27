@@ -96,7 +96,7 @@ python experiments.py
 ```
 if you store your csv files (only `data.csv` needed at this step) in the default data folder. Otherwise, you need to specify the folder by adding `-d <path_to_data>`. 
 
-The model will be trained on a number of confidence thresholds for the MegaDetector, with the default thresholds being 0.1, 0.3, 0.5, 0.7, and 0.9. You can update the thresholds by utilizing the flag `-s`. You will need to state the flag separately for each flag you want to use, e.g., if you want to train using thresholds of 0.2, 0.3, and 0.4, you would need to use `python experiments.py -a False -n True -s 0.2 -s 0.3 -s 0.4 -p <path_to_model>`.
+The model will be trained on a number of confidence thresholds for the MegaDetector, with the default thresholds being 0.1, 0.3, 0.5, 0.7, and 0.9. You can update the thresholds by utilizing the flag `-s`. You will need to state the flag separately for each flag you want to use, e.g., if you want to train using thresholds of 0.2, 0.3, and 0.4, you would need to use `python experiments.py -a False -n True -s 0.2 -s 0.3 -s 0.4 -p <path_to_model>`. You can download our pre-trained model [here](https://syncandshare.lrz.de/getlink/fiJsgDEKtkLCXfbhWM1GLR/ckpt_final_model.hdf5).
 
 The results of the training are stored in the `training_outputs` folder. An early stopping mechanism is employed so that the training stops after the results stop progressing and the best model only is saved. After the training of each threshold is finished, you can find the results in the corresponding folder. After the training starts, a folder is created in the `training_outputs`, naming the date and time when the training has started. Then inside that folder, you can find the folders corresponding to each threshold. Depending on the amount of data you use for the training, it can take multiple days to train all the models. 
 
@@ -179,6 +179,11 @@ where the `-f` states whether you want to generate folders with all the images c
 
 #### Output
 Depending, on whether you set `-f` to `True` or `False`, you will find different outputs. The outputs can be found in the predictions and then in the folder corresponding to your run based on the date and time. Inside of the folder you will always find `predictions.csv`. If you set `-f True`, then you will also find folders corresponding to the species names in the dataset. Inside of those folders, you can find the images that were predicted as the given species. 
+
+## Other Info
+- Link to our pre-trained model on which you can start the passive training: [download here](https://syncandshare.lrz.de/getlink/fiJsgDEKtkLCXfbhWM1GLR/ckpt_final_model.hdf5).
+- Paper on which the repository is based: [find here](https://arxiv.org/pdf/2303.15823).
+- This repository is utlizing a wildlife-ml package you can find in this [repository](https://github.com/slds-lmu/wildlife-ml).
 
 
 
