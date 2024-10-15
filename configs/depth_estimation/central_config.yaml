@@ -1,0 +1,7 @@
+root_config_folder: "configs/depth_estimation"  # This is where all your individual config files are stored
+
+hydra:
+  run:
+    dir: .   # This keeps the working directory unchanged (i.e., no new output folder will be created)
+  output_subdir: null  # This disables creating the "outputs" directory
+
