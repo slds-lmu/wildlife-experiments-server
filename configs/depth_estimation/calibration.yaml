@@ -21,7 +21,4 @@ mask_generation:
   min_mask_pixel_image: 3000
   min_mask_pixel_area: 1000
 
-# hydra:
-#   run:
-#     dir: .  # This keeps the working directory unchanged (i.e., no new output folder will be created)
 

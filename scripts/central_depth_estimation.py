@@ -27,14 +27,28 @@ def central_executor(cfg: DictConfig):
         config_name = entry["config"] + ".yaml"
         config_dir = cfg.root_config_folder
 
-        # Run the script using subprocess and Hydra
-        command = [
-            "python", script_path,
-            f"-cd={config_dir}",
-            f"--config-name={config_name}",  # Set the config name
-            f"hydra.run.dir={output_dir}/{entry['config']}",  # Set the common output directory
-            # f"hydra.output_subdir=null",  # Disable subdirectory creation
-        ]
+        if cfg.override_present == True:
+            current_overrides = cfg[entry["config"]].overrides
+            override_str_list = [f"{override}" for override in current_overrides]
+            # override_str = " ".join(current_overrides)
+
+            # Run the script using subprocess and Hydra
+            command = [
+                "python", script_path,
+                f"-cd={config_dir}",
+                f"--config-name={config_name}",  # Set the config name
+                f"hydra.run.dir={output_dir}/{entry['config']}",  # Set the common output directory
+            ] + override_str_list
+            
+        else:
+            # Run the script using subprocess and Hydra
+            command = [
+                "python", script_path,
+                f"-cd={config_dir}",
+                f"--config-name={config_name}",  # Set the config name
+                f"hydra.run.dir={output_dir}/{entry['config']}",  # Set the common output directory
+            ]
+
         
         print(f"Executing {script_path} with config {config_name}")
         subprocess.run(command, check=True)

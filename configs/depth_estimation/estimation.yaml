@@ -36,11 +36,3 @@ sampling:
   sample_from: "DETECTION"  # one of REFERENCE|DETECTION
   bbox_sampling_percentile: 20  # percentile of depth values sampled from detected bounding boxes.
 
-# hydra:
-#   run:
-#     dir: .   # This keeps the working directory unchanged (i.e., no new output folder will be created)
-#   output_subdir: null  # This disables creating the "outputs" directory
-#   job_logging:
-#     handlers:
-#       file:
-#         class: null  # Disable file logging handler

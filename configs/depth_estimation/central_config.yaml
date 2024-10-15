@@ -1,5 +1,16 @@
 root_config_folder: "configs/depth_estimation"  # This is where all your individual config files are stored
 
+override_present: False
+
+calibration:
+  overrides: 
+    - "mask_generation.batch_size=4"
+    - mask_generation.segmenter_pretrained_in='"cityscapes"'
+
+estimation:
+  overrides:
+    - "general.max_depth=50"
+
 hydra:
   run:
     dir: .   # This keeps the working directory unchanged (i.e., no new output folder will be created)
