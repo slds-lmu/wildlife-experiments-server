@@ -19,7 +19,7 @@ file_extensions:
 
 detection:
   bbox_confidence_threshold: 0.2  # minimal confidence of detections
-  detect_humans: true  # whether to detect humans and include their distance estimations in the output
+  detect_humans: false  # whether to detect humans and include their distance estimations in the output
 
 visualization:
   make_figures: true  # save figures in results directory
@@ -32,7 +32,7 @@ calibration:
 
 sampling:
   detection_sampling_method: "BBOX_PERCENTILE"  # one of BBOX_BOTTOM|BBOX_PERCENTILE|SAM
-  multiple_animal_reduction: "ONLY_CENTERMOST"  # one of NONE|MEDIAN|ONLY_CENTERMOST|
+  multiple_animal_reduction: "NONE"  # one of NONE|MEDIAN|ONLY_CENTERMOST|
   sample_from: "DETECTION"  # one of REFERENCE|DETECTION
   bbox_sampling_percentile: 20  # percentile of depth values sampled from detected bounding boxes.
 
