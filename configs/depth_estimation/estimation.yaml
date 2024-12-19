@@ -1,7 +1,7 @@
 general:
   data_dir: "data/DistanceEstimationData"  # where the data is stored
   min_depth: 1.0  # minimum sampled distance
-  max_depth: 25.0  # maximum sampled distance
+  max_depth: 30.0  # maximum sampled distance
 
 cropping:
   crop_top: 0  # how many pixels to crop from the top of the images
@@ -10,15 +10,15 @@ cropping:
   crop_right: 0  # how many pixels to crop from the right of the images
 
 camera:
-  camera_horizontal_fov: 40.0  # horizontal field of view of the camera trap in degrees
-  camera_vertical_fov: 30.0  # vertical field of view of the camera trap in degrees
+  camera_horizontal_fov: 42.0  # horizontal field of view of the camera trap in degrees
+  camera_vertical_fov: 31.5  # vertical field of view of the camera trap in degrees
 
 file_extensions:
   depth_image_extensions: [".exr"]
   intensity_image_extensions: [".png", ".PNG", ".jpg", ".jpeg", ".JPG", ".JPEG"]
 
 detection:
-  bbox_confidence_threshold: 0.2  # minimal confidence of detections
+  bbox_confidence_threshold: 0.3  # minimal confidence of detections
   detect_humans: false  # whether to detect humans and include their distance estimations in the output
 
 visualization:

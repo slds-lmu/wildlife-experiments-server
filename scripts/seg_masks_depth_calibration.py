@@ -248,12 +248,12 @@ def generate_seg_masks(segmenter, dataloader, min_mask_pixel_image):
     #TODO: find way to use ignored maskes anyway, and investigate why ignored
     for item in ignored_masks_list:
         os.remove(item)
-        log.debug('Successfully removed ', item)
+        log.debug(f"Successfully removed {item}")
 
     #TODO: find way to use missed maskes anyway
     for item in missed_masks_list:
         os.remove(item)
-        log.debug('Successfully removed ', item)
+        log.debug(f"Successfully removed {item}")
 
 def remove_smaller_regions(binary_mask, size_threshold):
     # Connected Component Labeling
@@ -314,20 +314,20 @@ def rename_files_with_bigger_mask(file_list):
                     os.remove(get_corresponding_filepath(correct_path))
                     os.rename(file_path, correct_path)
                     os.rename(get_corresponding_filepath(file_path), get_corresponding_filepath(correct_path))
-                    log.debug("Removed ", correct_path, " and kept ", file_path, " under new name, as it has the bigger mask.")
+                    log.debug(f"Removed {correct_path} and kept {file_path} under new name, as it has the bigger mask.")
                 else: 
                     os.remove(file_path)
                     os.remove(get_corresponding_filepath(file_path))
-                    log.debug("Removed ",  file_path, ", as ", correct_path, " has the bigger mask.") 
+                    log.debug(f"Removed {file_path}, as {correct_path} has the bigger mask.") 
             else:
                 # No conflict with the new name, so we can rename the file
                 os.rename(file_path, correct_path)
                 os.rename(get_corresponding_filepath(file_path), get_corresponding_filepath(correct_path))
-                log.debug("Renamed ", file_path," to ", correct_path, ".")
+                log.debug(f"Renamed {file_path} to {correct_path}.")
         else:
             os.remove(file_path)
             os.remove(get_corresponding_filepath(file_path))
-            log.debug("File ", file_path, " removed, as it has no correct distance assigned.")
+            log.debug(f"File {file_path} removed, as it has no correct distance assigned.")
   
 
 @hydra.main(config_path="../configs/depth_estimation", config_name="calibration", version_base="1.1")
@@ -336,7 +336,7 @@ def run_segmentation(cfg: DictConfig):
     # GPU set-up
     os.environ['CUDA_VISIBLE_DEVICES'] = cfg.gpu.used_gpu_idx
     DEVICE = torch.device(cfg.gpu.cuda_idx if torch.cuda.is_available() else 'cpu')
-    log.info("CUDA_VISIBLE_DEVICES set to:", os.environ.get('CUDA_VISIBLE_DEVICES'))
+    log.info(f"CUDA_VISIBLE_DEVICES set to:{os.environ.get('CUDA_VISIBLE_DEVICES')}")
 
     # directory set-up
     dataset_path = Path(__file__).resolve().parent.parent / cfg.directories.clean_data_dir
@@ -357,7 +357,7 @@ def run_segmentation(cfg: DictConfig):
         device=DEVICE,
         debug=cfg.mask_generation.debug_mode,
     )
-    log.info("Length of loaded data set: ", len(dataset))
+    log.info(f"Length of loaded data set: {len(dataset)}")
 
     # Create segmentation masks
     generate_seg_masks(segmenter=segmenter, dataloader=dataloader, min_mask_pixel_image= cfg.mask_generation.min_mask_pixel_image)
@@ -404,7 +404,7 @@ def run_segmentation(cfg: DictConfig):
             if 'calibration_frames_masks' in root:
                 file_path = os.path.join(root, file)
                 if get_white_pixels(file_path) < cfg.mask_generation.min_mask_pixel_image:
-                    log.debug(f"Removed directory, because of small mask: ", file_path)
+                    log.debug(f"Removed directory, because of small mask: {file_path}")
                     os.remove(file_path)
                     os.remove(get_corresponding_filepath(file_path))
 

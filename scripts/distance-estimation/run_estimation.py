@@ -69,7 +69,7 @@ def run_depth_estimation(cfg: DictConfig):
         sam = SAM()
 
     with open(os.path.join(DATA_DIR, "results", "results.csv"), "w", newline="") as result_csv_file, open(os.path.join(DATA_DIR, "results", "results.txt"), "w") as result_distance_file: 
-        head_row_csv = ["transect_id", "frame_id", "detection_idx", "detection_confidence", "depth", "world_x", "world_y", "world_z"]
+        head_row_csv = ["transect_id", "frame_id", "detection_idx", "detection_confidence", "depth", "world_x", "world_y", "world_z", "location_pixel_x", "location_pixel_y"]
         head_row_txt = ["Camera trap*Label", "Observation*Radial distance"]
         result_csv_writer = csv.writer(result_csv_file) 
         result_csv_writer.writerow(head_row_csv)
@@ -77,8 +77,9 @@ def run_depth_estimation(cfg: DictConfig):
 
         transect_dirs = sorted(glob.glob(os.path.join(DATA_DIR, "transects", "*/")))
         for transect_idx, transect_dir in enumerate(transect_dirs):
+            first_image_in_transect = True
             transect_id = os.path.basename(os.path.normpath(transect_dir))
-            log.debug("Calibrating Transect ", transect_id)
+            log.debug(f"Calibrating Transect {str(transect_id)}")
 
             exp = -1 if cfg.calibration.calibrate_metric else 1
             calibration_frames = {}
@@ -148,7 +149,7 @@ def run_depth_estimation(cfg: DictConfig):
                 calibration = None
                 farthest_calibration_frame_disp = None
                 if not os.path.exists(os.path.join(transect_dir, "detection_frames")):
-                    log.warning(f"Failed calibrating transect '{transect_id}' due to exception: {exception_to_str(e)}. Skipping all distance estimations for observations in this transect.")
+                    log.warning(f"Failed calibrating transect '{str(transect_id)}' due to exception: {exception_to_str(e)}. Skipping all distance estimations for observations in this transect.")
 
             if cfg.visualization.make_figures and farthest_calibration_frame_disp is not None:
                 visualize_farthest_calibration_frame(DATA_DIR, transect_id, farthest_calibration_frame_disp, cfg.general.min_depth, cfg.general.max_depth)
@@ -159,7 +160,7 @@ def run_depth_estimation(cfg: DictConfig):
             )))
             len_detection_files = len(detection_frame_filenames)
             if len_detection_files > 0:
-                log.info("Performing depth estimation in transect ", transect_id)
+                log.info(f"Performing depth estimation in transect {transect_id}")
             for detection_idx, detection_frame_filename in enumerate(detection_frame_filenames):
                 
                 detection_id = os.path.splitext(os.path.basename(detection_frame_filename))[0]
@@ -296,17 +297,19 @@ def run_depth_estimation(cfg: DictConfig):
                     sampled_depths = [np.median(sampled_depths)] if len(sampled_depths) > 0 else []
                     world_positions = [np.mean(world_positions, axis=0)]
 
-
-                if cfg.visualization.make_figures:
-                    visualize_detection(DATA_DIR, detection_id, img, depth, farthest_calibration_frame_disp, boxes, masks, world_positions, sample_locations, cfg.visualization.draw_detection_ids, cfg.visualization.draw_world_position, cfg.general.min_depth, cfg.general.max_depth)
+                if first_image_in_transect:
+                    if cfg.visualization.make_figures:
+                        visualize_detection(DATA_DIR, detection_id, img, depth, farthest_calibration_frame_disp, boxes, masks, world_positions, sample_locations, cfg.visualization.draw_detection_ids, cfg.visualization.draw_world_position, cfg.general.min_depth, cfg.general.max_depth)
 
                 
-                for i, (score, sampled_depth, world_position) in enumerate(zip(scores, sampled_depths, world_positions)):
+                for i, (score, sampled_depth, world_position, sample_location) in enumerate(zip(scores, sampled_depths, world_positions, sample_locations)):
                     detection_i = i if multiple_animal_reduction != MultipleAnimalReduction.MEDIAN else -1
-                    result_csv_writer.writerow([transect_id, detection_id, f"{detection_i:03d}", f"{score.item():.4f}", f"{sampled_depth.item():.4f}", f"{world_position[0].item():.4f}", f"{world_position[1].item():.4f}", f"{world_position[2].item():.4f}"])
+                    result_csv_writer.writerow([transect_id, detection_id, f"{detection_i:03d}", f"{score.item():.4f}", f"{sampled_depth.item():.4f}", f"{world_position[0].item():.4f}", f"{world_position[1].item():.4f}", f"{world_position[2].item():.4f}", f"{sample_location[0]:.4f}", f"{sample_location[1]:.4f}"])
                     result_distance_file.write("\t".join([transect_id, f"{sampled_depth.item():.4f}"]) + os.linesep)
 
-    shutil.move(DATA_DIR / "results", Path(cfg.hydra.run.dir) / "results")
+                first_image_in_transect = False
+
+    shutil.move(DATA_DIR / "results", Path(os.getcwd()) / "results")
 
 
 if __name__ == "__main__":

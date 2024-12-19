@@ -1,10 +1,17 @@
 # Distance Estimation for Assessing Animal Abundance
 
+## Disclaimer
+
+## Disclaimer
+
+The original repository for this project is available at [timmh/distance-estimation](https://github.com/timmh/distance-estimation/tree/main). However, here the repository is no longer active to ensure the integrity and consistency of the depth estimation process. Any future changes or improvements to the project are being developed and managed separately to avoid unintended modifications to the core methodology established in the original repository.
+
+## Usage
+
 ![Teaser](./assets/teaser.png)
 
 This is an implementation of the methodology proposed in "Overcoming the distance estimation bottleneck in estimating animal abundance with camera traps" [[`Ecological Informatics`](https://doi.org/10.1016/j.ecoinf.2021.101536)] [[`arXiv`](https://arxiv.org/abs/2105.04244)] using the since released [MegaDetector 5.0](https://github.com/microsoft/CameraTraps/releases/tag/v5.0). Both graphical and command-line interfaces are provided for Windows, macOS and Linux.
 
-## Usage
 
 Download the appropriate executable for your platform under [releases](https://github.com/timmh/distance-estimation/releases). Under Windows and Linux, you can directly run the downloaded file. Under macOS, you first need to install the application as usual by copying it into the `Applications` directory (you need to run macOS 11 Big Sur or newer and follow [additional steps](https://support.apple.com/guide/mac-help/open-a-mac-app-from-an-unidentified-developer-mh40616/mac) to open the app). Once running, you may select your input data and configuration. Please refer to the [Data Structure](#data-structure) section for details about the data directory.
 

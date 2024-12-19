@@ -4,12 +4,11 @@ override_present: False
 
 calibration:
   overrides: 
-    - "mask_generation.batch_size=4"
-    - mask_generation.segmenter_pretrained_in='"cityscapes"'
+    - "mask_generation.lightweight_segmenter=false"
 
 estimation:
   overrides:
-    - "general.max_depth=50"
+    - "general.min_depth=1"
 
 hydra:
   run:
