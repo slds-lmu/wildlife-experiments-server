@@ -230,8 +230,8 @@ def run_depth_estimation(cfg: DictConfig):
                 sample_locations = []
                 world_positions = []
                 for box, mask in zip(boxes, masks):
-                    
-                    if box[2] <= box[0] or box[3] <= box[1]:
+                    # megadetector bounding box format: xmin, ymin, xmax, ymax, wih origin at top-left corner
+                    if box[2] <= box[0] or box[3] <= box[1]:  # sanity check
                         continue
                     if detection_sampling_method == DetectionSamplingMethod.BBOX_BOTTOM:
                         sample_location = (
@@ -271,23 +271,23 @@ def run_depth_estimation(cfg: DictConfig):
                         sample_locations += [sample_location]
                     else:
                         raise RuntimeError(f"Invalid configuration value '{detection_sampling_method}' for configuration detection_sampling_method")
-    
-                    # compute horizontal angle a
+
+                    # compute horizontal angle a (updated from timmh/distance-estimation/commit/6f31bc5)
                     f = (0.5 * depth.shape[1]) / math.tan(0.5 * math.pi * cfg.camera.camera_horizontal_fov / 180)
                     c = np.array([0, 0, f])
-                    p = np.array([0, box[0] + box[2] / 2 - depth.shape[1] / 2, f])
-                    a = math.copysign(1, box[0] + box[2] / 2 - depth.shape[1] / 2) * math.acos(c @ p / (np.linalg.norm(c) * np.linalg.norm(p)))
+                    p = np.array([(box[0] + box[2]) / 2 - depth.shape[1] / 2, 0, f])  # corrections
+                    a = math.copysign(1, (box[0] + box[2]) / 2 - depth.shape[1] / 2) * math.acos((c @ p) / (np.linalg.norm(c) * np.linalg.norm(p)))
 
-                    # compute vertical angle b
+                    # compute vertical angle b (updated from timmh/distance-estimation/commit/6f31bc5)
                     f = (0.5 * depth.shape[0]) / math.tan(0.5 * math.pi * cfg.camera.camera_vertical_fov / 180)
                     c = np.array([0, 0, f])
-                    p = np.array([box[1] + box[3] / 2 - depth.shape[0] / 2, 0, f])
-                    b = math.copysign(1, box[1] + box[3] / 2 - depth.shape[0] / 2) * math.acos(c @ p / (np.linalg.norm(c) * np.linalg.norm(p)))
+                    p = np.array([0, (box[1] + box[3]) / 2 - depth.shape[0] / 2, f])  # corrections
+                    b = math.copysign(1, (box[1] + box[3]) / 2 - depth.shape[0] / 2) * math.acos((c @ p) / (np.linalg.norm(c) * np.linalg.norm(p)))
 
-                    # compute world position
-                    x = sampled_depths[-1] * math.tan(a)
-                    y = sampled_depths[-1] * math.tan(b)
-                    z = sampled_depths[-1] * math.cos(a) * math.cos(b)
+                    # compute world position # corrections
+                    z = sampled_depths[-1] / math.sqrt(math.tan(a) ** 2 + math.tan(b) ** 2 + 1)
+                    x = z * math.tan(a)
+                    y = z * math.tan(b)
                     world_positions += [[x, y, z]]
 
                     if multiple_animal_reduction == MultipleAnimalReduction.ONLY_CENTERMOST:

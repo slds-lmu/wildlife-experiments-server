@@ -5,6 +5,7 @@ import logging
 import numpy as np
 import cv2
 import onnxruntime
+from pathlib import Path
 from utils import get_onnxruntime_providers, is_standalone
 
 
@@ -16,7 +17,8 @@ class SAM:
                 with open(os.path.join(sys._MEIPASS, "weights", weights_name), "rb") as f:
                     weight_bytes = f.read()
             else:
-                with open(os.path.join("weights", weights_name), "rb") as f:
+                SCRIPT_DIR = Path(__file__).resolve().parent
+                with open(os.path.join(SCRIPT_DIR, "weights", weights_name), "rb") as f:
                     weight_bytes = f.read()
 
             providers = get_onnxruntime_providers()
