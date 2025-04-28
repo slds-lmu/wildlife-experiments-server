@@ -68,7 +68,8 @@ def run_depth_estimation(cfg: DictConfig):
     if detection_sampling_method == DetectionSamplingMethod.SAM:
         sam = SAM()
 
-    with open(os.path.join(DATA_DIR, "results", "results.csv"), "w", newline="") as result_csv_file, open(os.path.join(DATA_DIR, "results", "results.txt"), "w") as result_distance_file: 
+    config_detail = f"{cfg.sampling.detection_sampling_method}-{cfg.general.max_depth}_m-confidence_{int(cfg.detection.bbox_confidence_threshold*100)}"
+    with open(os.path.join(DATA_DIR, "results", f"results_{config_detail}.csv"), "w", newline="") as result_csv_file, open(os.path.join(DATA_DIR, "results", f"results_{config_detail}.txt"), "w") as result_distance_file:
         head_row_csv = ["transect_id", "frame_id", "detection_idx", "detection_confidence", "depth", "world_x", "world_y", "world_z", "location_pixel_x", "location_pixel_y"]
         head_row_txt = ["Camera trap*Label", "Observation*Radial distance"]
         result_csv_writer = csv.writer(result_csv_file) 
