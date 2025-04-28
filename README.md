@@ -261,7 +261,7 @@ Depending, on whether you set `-f` to `True` or `False`, you will find different
 
 ### Depth Estimation
 
-The depth esimation is centralized in executing one script:
+The depth estimation pipeline is centralized in executing one script:
 ```bash
 cd wildlife-experiments-server
 python scripts/central_depth_estimation.py
@@ -310,6 +310,31 @@ Output:
 Execution: 
 
 `python scripts/distance-estimation/run_estimation.py`
+
+#### Running multiple configurations
+
+Given the lists of the following three parameters of `estimation.yaml`, an automation script of the same depth estimation pipeline to run all possible combinations of these three parameters is also provided.
+```
+configs/depth_estimation/estimation.yaml
+    -general.max_depth
+    -detection.bbox_confidence_threshold
+    -sampling.detection_sampling_method
+```
+
+This automation script can be run with:
+
+```bash
+cd wildlife-experiments-server
+python central_depth_estimation.py
+```
+
+The following arguments in `central_depth_estimation.py` each overrides the corresponding parameter in `configs/depth_estimation/estimation.yaml` during the estimation step:
+- **MAX_DEPTHS**: List of depth values (float) for `general.max_depth` parameter.
+- **CONFIDENCES**: List of confidence values (float) for `detection.bbox_confidence_threshold` parameter. Can contain values only between `0` and `1`.
+- **METHODS**: List of detection sampling methods (string) for `sampling.detection_sampling_method` parameter. Can contain only the following methods, namely `"BBOX_BOTTOM"`, `"BBOX_PERCENTILE"`, and `"SAM"`.
+
+*Note: The Calibration step is run only once, but the Estimation step is run once for every possible parameter combination.*
+
 
 ## Other Info
 - Link to our pre-trained model on which you can start the passive training: [download here](https://syncandshare.lrz.de/getlink/fiJsgDEKtkLCXfbhWM1GLR/ckpt_final_model.hdf5).
