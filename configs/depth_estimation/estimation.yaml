@@ -1,0 +1,38 @@
+general:
+  data_dir: "data/DistanceEstimationData"  # where the data is stored
+  min_depth: 1.0  # minimum sampled distance
+  max_depth: 30.0  # maximum sampled distance
+
+cropping:
+  crop_top: 0  # how many pixels to crop from the top of the images
+  crop_bottom: 0  # how many pixels to crop from the bottom of the images
+  crop_left: 0  # how many pixels to crop from the left of the images
+  crop_right: 0  # how many pixels to crop from the right of the images
+
+camera:
+  camera_horizontal_fov: 42.0  # horizontal field of view of the camera trap in degrees
+  camera_vertical_fov: 31.5  # vertical field of view of the camera trap in degrees
+
+file_extensions:
+  depth_image_extensions: [".exr"]
+  intensity_image_extensions: [".png", ".PNG", ".jpg", ".jpeg", ".JPG", ".JPEG"]
+
+detection:
+  bbox_confidence_threshold: 0.3  # minimal confidence of detections
+  detect_humans: false  # whether to detect humans and include their distance estimations in the output
+
+visualization:
+  make_figures: true  # save figures in results directory
+  draw_detection_ids: false  # whether to annotate detection IDs over detected bounding boxes
+  draw_world_position: false  # whether to annotate estimated world position over detected bounding boxes
+
+calibration:
+  calibrate_metric: false  # whether to calibrate in metric or in disparity space
+  calibration_regression_method: "RANSAC"  # one of RANSAC|LEASTSQUARES|POLY|RANSAC_POLY
+
+sampling:
+  detection_sampling_method: "BBOX_PERCENTILE"  # one of BBOX_BOTTOM|BBOX_PERCENTILE|SAM
+  multiple_animal_reduction: "NONE"  # one of NONE|MEDIAN|ONLY_CENTERMOST|
+  sample_from: "DETECTION"  # one of REFERENCE|DETECTION
+  bbox_sampling_percentile: 20  # percentile of depth values sampled from detected bounding boxes.
+
