@@ -9,12 +9,12 @@ Researchers can train models on pre-labeled data, fine-tune them using active le
 
 Additionally, this project supports predictions on large volumes of unlabeled images, with options to sort outputs into folders by species. Designed for flexibility, users can customize data storage and model training settings for parallel experiments. The project also includes a pre-trained model and detailed instructions for getting started quickly.
 
-For unlabeled data, there is an option for performing depth estistimation with (coming soon) or without classification. It uses the  methodology proposed in "Overcoming the distance estimation bottleneck in estimating animal abundance with camera traps" [[`Ecological Informatics`](https://doi.org/10.1016/j.ecoinf.2021.101536)] [[`arXiv`](https://arxiv.org/abs/2105.04244)] using the since released [MegaDetector 5.0](https://github.com/microsoft/CameraTraps/releases/tag/v5.0), [Dense Prediction Transformers](https://github.com/isl-org/DPT), and [Segment Anything](https://github.com/facebookresearch/segment-anything). The methodology was expanded by LMU Munich by automatically segement the calibration images. We utilize the pre-trained segmentation network **SegFormer** from NVIDIA Research, available on Huggingface ([SegFormer-b5](https://huggingface.co/nvidia/segformer-b5-finetuned-ade-640-640)). 
+For unlabeled data, there is an option for performing depth estimation with (coming soon) or without classification. It uses the  methodology proposed in "Overcoming the distance estimation bottleneck in estimating animal abundance with camera traps" [[`Ecological Informatics`](https://doi.org/10.1016/j.ecoinf.2021.101536)] [[`arXiv`](https://arxiv.org/abs/2105.04244)] using the since released [MegaDetector 5.0](https://github.com/microsoft/CameraTraps/releases/tag/v5.0), [Dense Prediction Transformers](https://github.com/isl-org/DPT), and [Segment Anything](https://github.com/facebookresearch/segment-anything). The methodology was expanded by LMU Munich to automatically segement the calibration images. We utilize the pre-trained segmentation network **SegFormer** from NVIDIA Research, available on Huggingface ([SegFormer-b5](https://huggingface.co/nvidia/segformer-b5-finetuned-ade-640-640)). 
 
 
 ## Table of Contents
 - [Installation](#installation)
-- [Data Preperation](#data-preparation)
+- [Data Preparation](#data-preparation)
 - [Environments](#environments)
 - [Usage](#usage)
 - [Other Info](#other-info)
@@ -44,7 +44,7 @@ For unlabeled data, there is an option for performing depth estistimation with (
    pip install -r requirements_tf.txt
    ```
 
-## Data Preperation
+## Data Preparation
 
 ### Classification
 User has to set up the following before they can get started:
@@ -76,12 +76,12 @@ Distancefotos
 		Kronenschlussgrad
 	...
 
-The second data set is the one, where depth estimation is applied. It defaults to
+The second data set is the one where depth estimation is applied. It defaults to
 ```bash
 directories:
   raw_trap_data_dir: "../Images/Distance_Estimation/Red_Deer"
 ```
-and it is important that here also the folder contains foldes named after the location the image is taken at.
+and it is important that here also the folder contains folders named after the location the image is taken at.
 
 Example: 
 Red_Deer
@@ -181,7 +181,7 @@ The results of the training are stored in the `training_outputs` folder. An earl
 
 ##### Output
 
-The output of the training can be found in training_outputs/new_species. For each training a new folder is generated inside of `training_outputs/new_species` that is named based on the date and the time when the training was started. Then inside of that folder, you can find folders corresponding to each of the thresholds stated for the training. Inside of each of the folders corresponding to the thresholds, you can find the following files:
+The output of the training can be found in training_outputs/new_species. For each training a new folder is generated inside of `training_outputs/new_species` that is named based on the date and the time when the training was started. Then inside that folder, you can find folders corresponding to each of the thresholds stated for the training. Inside of each of the folders corresponding to the thresholds, you can find the following files:
 
 - `model.h5` - the best model corresponding to that given training
     
@@ -217,7 +217,7 @@ The output depends on the initial state of the `data/active folder`. If the fold
 If you start the training after you labeled the images in the `active_labels.csv` file, the training is going to start. Then, you can find the output files in `training_outputs/active`. Similar to passive training, when you run the command, a folder is generated based on the date and time when you run the command. Then, inside that folder, you can find the best model (`model.h5`) and the files corresponding to the results on the validation set using that model. Thus, all the files you can find there are:
 - `model.h5` - the best model corresponding to that given training
 - `overall_results.csv` - with results for the whole dataset regardless of the class
-- `per_species_results.csv` - with results per each specie
+- `per_species_results.csv` - with results per each species
 - `val_pred.csv` - the results of the prediction on each image in the validation set
 - `confusion_matrix.png` - a figure representing the confusion matrix.
 
@@ -241,7 +241,7 @@ Additionally, you can filter the data such that only images ending with `a` (the
 ##### Output
 You can find the output of the command in the results folder. Here, once again the folder are generated based on the date and the time at which the command was started. Inside of the folder corresponding to the run you are looking for, you can find the following files:
 - `overall_results.csv` - with results for the whole dataset regardless of the class
-- `per_species_results.csv` - with results per each specie 
+- `per_species_results.csv` - with results per each species 
 - `predictions.csv` - the results of the prediction on each image in the test set/the whole data.csv
 - `confusion_matrix.png` - a figure representing the confusion matrix.
 
@@ -257,7 +257,7 @@ python predict.py
 where the `-f` states whether you want to generate folders with all the images corresponding to the predictions (`True`) or if you only want to acquire a csv file (`False`). Once again, if your data (here the images come from the `unlabeled.csv` file) is not stored in the default data folder, you will need to specify the folder using the `-d` flag. 
 
 ##### Output
-Depending, on whether you set `-f` to `True` or `False`, you will find different outputs. The outputs can be found in the predictions and then in the folder corresponding to your run based on the date and time. Inside of the folder you will always find `predictions.csv`. If you set `-f True`, then you will also find folders corresponding to the species names in the dataset. Inside of those folders, you can find the images that were predicted as the given species. 
+Depending, on whether you set `-f` to `True` or `False`, you will find different outputs. The outputs can be found in the predictions and then in the folder corresponding to your run based on the date and time. Inside the folder you will always find `predictions.csv`. If you set `-f True`, then you will also find folders corresponding to the species names in the dataset. Inside of those folders, you can find the images that were predicted as the given species. 
 
 ### Depth Estimation
 
@@ -268,7 +268,7 @@ python scripts/central_depth_estimation.py
 ```
 
 This will execute four scripts:
-1- `data_prep_depth_calibration.py`: Converting the LWF raw calibration data into the format required by the pipeline and handle irregularities in the naming convention. The raw data folder setting is explained in [Data Preperation](#data-preperation). The script will sort the data into the then created 
+1- `data_prep_depth_calibration.py`: Converting the LWF raw calibration data into the format required by the pipeline and handle irregularities in the naming convention. The raw data folder setting is explained in [Data Preparation](#data-preparation). The script will sort the data into the then created 
 ```bash
 directories:
   clean_data_dir: "data/DistanceEstimationData"
@@ -281,7 +281,7 @@ Execution:
 `python scripts/data_prep_depth_calibration.py`
 
 
-2- `seg_masks_depth_calibration.py`: This script processes camera trap calibration images for distance estimation by generating segmentation masks using the SegFormer model. The script iterates through all images in `calibration_frames` to generate masks. Masks are saved if they are successfully created and exceed the minimum pixel threshold defined by `cfg.mask_generation.min_mask_pixel_image` for all segmented areas in one masked image. Images where either no masks is created or it it too small are ignored. After mask creation, any segments within one masked image smaller than `cfg.mask_generation.min_mask_pixel_area` pixels are removed using the `remove_smaller_regions()` function.
+2- `seg_masks_depth_calibration.py`: This script processes camera trap calibration images for distance estimation by generating segmentation masks using the SegFormer model. The script iterates through all images in `calibration_frames` to generate masks. Masks are saved if they are successfully created and exceed the minimum pixel threshold defined by `cfg.mask_generation.min_mask_pixel_image` for all segmented areas in one masked image. Images where no masks are created, or the masks are too small, are ignored. After mask creation, any segments within one masked image smaller than `cfg.mask_generation.min_mask_pixel_area` pixels are removed using the `remove_smaller_regions()` function.
 For file management, the script renames irregular files using the `rename_files_with_bigger_mask()` function. In cases where multiple images are assigned the same distance, the script keeps the image with the larger mask. Transect directories containing fewer than two calibration images are removed.
 The script uses GPU for processing, as specified by `cfg.gpu.used_gpu_idx` (outdated, LWF has only one GPU on the server), and stores the created masks in the `self.directories.clean_data_dir`, specifically within the `calibration_frames_masks` subdirectory for each transect.
 
@@ -325,10 +325,10 @@ This automation script can be run with:
 
 ```bash
 cd wildlife-experiments-server
-python central_depth_estimation.py
+python experiments_paper.py
 ```
 
-The following arguments in `central_depth_estimation.py` each overrides the corresponding parameter in `configs/depth_estimation/estimation.yaml` during the estimation step:
+The following arguments in `experiments_paper.py` each override the corresponding parameter in `configs/depth_estimation/estimation.yaml` during the estimation step:
 - **MAX_DEPTHS**: List of depth values (float) for `general.max_depth` parameter.
 - **CONFIDENCES**: List of confidence values (float) for `detection.bbox_confidence_threshold` parameter. Can contain values only between `0` and `1`.
 - **METHODS**: List of detection sampling methods (string) for `sampling.detection_sampling_method` parameter. Can contain only the following methods, namely `"BBOX_BOTTOM"`, `"BBOX_PERCENTILE"`, and `"SAM"`.
@@ -361,6 +361,7 @@ If you use this repository, please consider citing our corresponding paper:
 ```
 
 For the depth estimation, please consider citing the paper from Timm Hacke et al.:
+```
 @article{Haucke_2022,
    title={Overcoming the distance estimation bottleneck in estimating animal abundance with camera traps},
    volume={68},
@@ -371,11 +372,7 @@ For the depth estimation, please consider citing the paper from Timm Hacke et al
    publisher={Elsevier BV},
    author={Haucke, Timm and Kühl, Hjalmar S. and Hoyer, Jacqueline and Steinhage, Volker},
    year={2022},
-   month=may, pages={101536}}
-
-
-
-
-
-
-
+   month=may,
+   pages={101536}
+}
+```
